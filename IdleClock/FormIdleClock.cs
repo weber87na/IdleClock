@@ -26,7 +26,21 @@ namespace IdleClock
         public FormIdleClock()
         {
             InitializeComponent( );
+            notifyIcon.ContextMenuStrip = this.contextMenuStrip;
+            toolStripMenuItemShow.Click += ToolStripMenuItemShow_Click;
+            toolStripMenuItemExit.Click += ToolStripMenuItemExit_Click;
+        }
 
+        private void ToolStripMenuItemExit_Click(object sender, EventArgs e)
+        {
+            Environment.Exit( 0 );
+        }
+
+        private void ToolStripMenuItemShow_Click(object sender, EventArgs e)
+        {
+            //this.Show( );
+            this.WindowState = FormWindowState.Normal;
+            this.Activate( );
         }
 
         Timer timerIdle = new Timer( );
@@ -35,6 +49,24 @@ namespace IdleClock
             timerIdle.Interval = 1000;
             timerIdle.Tick += TimerIdle_Tick;
             timerIdle.Start( );
+
+            this.FormClosing += FormIdleClock_FormClosing;
+        }
+
+        private void FormIdleClock_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                notifyIcon.BalloonTipText = "混水摸魚";
+                notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
+                notifyIcon.BalloonTipTitle = "注意!";
+                notifyIcon.ShowBalloonTip( 1500 );
+
+                e.Cancel = true;
+                //this.Hide( );
+                this.WindowState = FormWindowState.Minimized;
+                this.ShowInTaskbar = false;
+            }
         }
 
         private void TimerIdle_Tick(object sender, EventArgs e)
@@ -66,6 +98,13 @@ namespace IdleClock
 
         private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            if (this.WindowState == FormWindowState.Minimized) 
+                this.WindowState = FormWindowState.Normal;
+
+            this.ShowInTaskbar = true;
+            //this.Show( );
+            this.Activate( );
+
         }
     }
 }
