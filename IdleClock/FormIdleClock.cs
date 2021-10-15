@@ -22,6 +22,7 @@ namespace IdleClock
         int counter = 0;
 
         //預設閒置秒數
+        //int idle = 30;
         int idle = 30;
         public FormIdleClock()
         {
@@ -89,6 +90,9 @@ namespace IdleClock
             {
                 lastIdle = InputTimer.GetInputIdleTime( ).Seconds;
                 labelIdle.Text = $"耍廢時數 : {currentIdle + lastIdle} 秒";
+                var icon = new Icon( "fish-pink.ico" );
+                notifyIcon.Icon = icon;
+                this.Icon = icon; 
             }
             else
             {
