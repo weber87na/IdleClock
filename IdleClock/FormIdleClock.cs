@@ -51,6 +51,15 @@ namespace IdleClock
             timerIdle.Start( );
 
             this.FormClosing += FormIdleClock_FormClosing;
+            this.Resize += FormIdleClock_Resize;
+        }
+
+        private void FormIdleClock_Resize(object sender, EventArgs e)
+        {
+            if(WindowState == FormWindowState.Normal)
+                notifyIcon.Visible = false;
+            else
+                notifyIcon.Visible = true;
         }
 
         private void FormIdleClock_FormClosing(object sender, FormClosingEventArgs e)
