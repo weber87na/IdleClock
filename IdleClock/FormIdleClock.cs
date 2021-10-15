@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace IdleClock
 {
-    public partial class Form1 : Form
+    public partial class FormIdleClock : Form
     {
-        public Form1()
+        public FormIdleClock()
         {
             InitializeComponent( );
         }
