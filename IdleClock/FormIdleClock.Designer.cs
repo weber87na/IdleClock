@@ -57,6 +57,7 @@ namespace IdleClock
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "混水摸魚計時器";
+            this.Load += new System.EventHandler(this.FormIdleClock_Load);
             this.ResumeLayout(false);
 
         }
