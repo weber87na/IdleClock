@@ -53,7 +53,7 @@ namespace IdleClock
             // notifyIcon
             // 
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-            this.notifyIcon.Text = "notifyIcon1";
+            this.notifyIcon.Text = "混水摸魚計時器";
             this.notifyIcon.Visible = true;
             this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
             // 
@@ -68,7 +68,7 @@ namespace IdleClock
             // toolStripMenuItemShow
             // 
             this.toolStripMenuItemShow.Name = "toolStripMenuItemShow";
-            this.toolStripMenuItemShow.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemShow.Size = new System.Drawing.Size(105, 22);
             this.toolStripMenuItemShow.Text = "Show";
             // 
             // toolStripMenuItemExit
