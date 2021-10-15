@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -27,11 +28,9 @@ namespace IdleClock
         public FormIdleClock()
         {
             InitializeComponent( );
-            notifyIcon.ContextMenuStrip = this.contextMenuStrip;
-            toolStripMenuItemShow.Click += ToolStripMenuItemShow_Click;
-            toolStripMenuItemExit.Click += ToolStripMenuItemExit_Click;
         }
 
+        //點選 Exit 時關閉程式
         private void ToolStripMenuItemExit_Click(object sender, EventArgs e)
         {
             Environment.Exit( 0 );
@@ -44,9 +43,15 @@ namespace IdleClock
             this.Activate( );
         }
 
+        //閒置時間
         Timer timerIdle = new Timer( );
         private void FormIdleClock_Load(object sender, EventArgs e)
         {
+            notifyIcon.ContextMenuStrip = this.contextMenuStrip;
+            toolStripMenuItemShow.Click += ToolStripMenuItemShow_Click;
+            toolStripMenuItemExit.Click += ToolStripMenuItemExit_Click;
+
+            //設定閒置時間
             timerIdle.Interval = 1000;
             timerIdle.Tick += TimerIdle_Tick;
             timerIdle.Start( );
@@ -55,14 +60,17 @@ namespace IdleClock
             this.Resize += FormIdleClock_Resize;
         }
 
+
+        //當觸發視窗變為 normal or mini 時切換摸魚圖示的顯示
         private void FormIdleClock_Resize(object sender, EventArgs e)
         {
-            if(WindowState == FormWindowState.Normal)
+            if (WindowState == FormWindowState.Normal)
                 notifyIcon.Visible = false;
             else
                 notifyIcon.Visible = true;
         }
 
+        //設定表單按下關閉時不要真的關掉而是縮小到右下角
         private void FormIdleClock_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
@@ -79,6 +87,7 @@ namespace IdleClock
             }
         }
 
+        //核心計算閒置時間功能
         private void TimerIdle_Tick(object sender, EventArgs e)
         {
             //每秒 counter 遞增供給非閒置時候進行判斷
@@ -92,7 +101,7 @@ namespace IdleClock
                 labelIdle.Text = $"耍廢時數 : {currentIdle + lastIdle} 秒";
                 var icon = new Icon( "fish-pink.ico" );
                 notifyIcon.Icon = icon;
-                this.Icon = icon; 
+                this.Icon = icon;
             }
             else
             {
@@ -109,9 +118,10 @@ namespace IdleClock
             }
         }
 
+        //設定點選右下角摸魚圖示時還原整個視窗
         private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (this.WindowState == FormWindowState.Minimized) 
+            if (this.WindowState == FormWindowState.Minimized)
                 this.WindowState = FormWindowState.Normal;
 
             this.ShowInTaskbar = true;
